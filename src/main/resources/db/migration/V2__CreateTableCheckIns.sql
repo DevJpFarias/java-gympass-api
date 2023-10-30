@@ -1,0 +1,5 @@
+CREATE TABLE check_ins (
+  id SERIAL PRIMARY KEY,
+  created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  validated_at TIMESTAMP(3)
+);
