@@ -1,5 +1,14 @@
 # App
 
+# Migrations
+
+-> Lembre-se de que a pasta deve estar no singular: resources/db/migration
+
+-> Lembre-se também de usar o padrão do flyway: versãodb__NomeDaMigration.sql
+=> Exemplo: V1__CreateUsersTable.sql
+
+-> Para rodar as migrations, use o comando: mvn flyway:migrate -Dflyway.url=jdbc:postgresql://localhost:5432/javagympass -Dflyway.user=docker -Dflyway.password=docker
+
 GymPass Java style app.
 
 ## RFs (Requisitos funcionais)
@@ -30,3 +39,25 @@ GymPass Java style app.
 - [ ] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
 - [ ] Todas listas de dados precisam estar paginadas com 20 itens por página;
 - [ ] O usuário deve ser identificado por um JWT (JSON Web Token);
+
+## Tabelas
+
+# User
+ - id: string
+ - name: string
+ - email: string
+ - password_hash: string
+ - created_at: date
+
+# CheckIn
+ - id: string
+ - created_at: date
+ - validated_at: date
+
+# Gym
+ - id: string
+ - title: string
+ - description: string | null
+ - phone: string | null
+ - latitude: number
+ - longitude: number
