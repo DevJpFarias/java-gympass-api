@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Min;
 
 public record UserRequest(
-  String id,
+  // String id,
 
   @NotBlank
   String name,
