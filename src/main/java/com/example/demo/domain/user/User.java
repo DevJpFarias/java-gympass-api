@@ -1,6 +1,7 @@
 package com.example.demo.domain.user;
 
 import jakarta.persistence.Table;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,5 +26,10 @@ public class User {
   private String name;
   private String email;
   private String password_hash;
-  private String created_at;
+
+  public User (UserRequest userRequest) {
+    this.name = userRequest.name();
+    this.email = userRequest.email();
+    this.password_hash = userRequest.password();
+  }
 }
