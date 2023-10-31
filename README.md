@@ -9,6 +9,8 @@
 
 -> Para rodar as migrations, use o comando: mvn flyway:migrate -Dflyway.url=jdbc:postgresql://localhost:5432/javagympass -Dflyway.user=docker -Dflyway.password=docker
 
+-> Se acontecer algum problema, tente o comando: mvn flyway:repair Dflyway.url=jdbc:postgresql://localhost:5432/javagympass -Dflyway.user=docker -Dflyway.password=docker
+
 GymPass Java style app.
 
 ## RFs (Requisitos funcionais)
