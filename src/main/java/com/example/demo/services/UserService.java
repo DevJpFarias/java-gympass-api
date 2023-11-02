@@ -1,20 +1,30 @@
 package com.example.demo.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
-import com.example.demo.domain.user.UsersRepository;
+import com.example.demo.repositories.UserRepository;
 
 @Service
-public class CreateUserService {
+public class UserService {
   @Autowired
-  UsersRepository repository;
+  UserRepository repository;
 
-  public void execute(UserRequest data) {
+  public User createUser(UserRequest data) {
     User newUser = new User(data);
     
     repository.save(newUser);
+
+    return newUser;
+  }
+
+  public List<User> getAllUsers() {
+    var users = repository.findAll();
+
+    return users;
   }
 }
