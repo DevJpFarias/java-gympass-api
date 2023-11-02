@@ -34,4 +34,8 @@ public class UserService {
 
     return user;
   }
+
+  public User updateUser(User user) {
+    return repository.save(user);
+  }
 }
