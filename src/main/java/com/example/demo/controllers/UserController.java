@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
-import com.example.demo.services.CreateUserService;
-import com.example.demo.services.ListAllUsersService;
+import com.example.demo.services.UserService;
 
 import jakarta.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,22 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
   @Autowired
-  private ListAllUsersService listAllUsersService;
-
-  @Autowired
-  private CreateUserService createUserService;
+  private UserService userService;
 
   @GetMapping
   public ResponseEntity<List<User>> getAllUsers() {
-    var users = listAllUsersService.execute();
+    var users = userService.getAllUsers();
 
-    return ResponseEntity.ok(users);
+    return ResponseEntity.status(HttpStatus.OK).body(users);
   }
 
   @PostMapping
-  public ResponseEntity<String> createUser(@RequestBody @Valid UserRequest data) {
-    createUserService.execute(data);
+  public ResponseEntity<User> createUser(@RequestBody @Valid UserRequest data) {
+    var newUser = userService.createUser(data);
 
-    return ResponseEntity.ok().build();
+    return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
   }
 }
