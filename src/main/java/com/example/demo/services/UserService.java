@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
@@ -20,7 +21,17 @@ public class UserService {
   }
 
   public User createUser(UserRequest data) {
-    User newUser = new User(data);
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    String hashPassword = passwordEncoder.encode(data.password());
+
+    UserRequest newData = new UserRequest(
+      data.name(),
+      data.email(),
+      hashPassword
+    );
+
+    User newUser = new User(newData);
     
     userRepository.save(newUser);
 

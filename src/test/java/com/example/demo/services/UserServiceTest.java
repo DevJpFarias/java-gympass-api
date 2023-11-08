@@ -40,6 +40,7 @@ public class UserServiceTest {
     assertEquals(expectedUser, createdUser, "Deve ser possível se cadastrar.");
   }
 
+  @Test
   public void passwordEncryptionTest() {
     String password = "123456";
 
@@ -49,11 +50,9 @@ public class UserServiceTest {
 
     User createdUser = userService.createUser(userRequest);
 
-    String userHashedPassword = createdUser.getId();
-
-    String encryptedPassword = passwordEncoder.encode(password);
+    String userHashedPassword = createdUser.getPassword_hash();
     
     assertTrue(!password.equals(userHashedPassword));
-    assertTrue(passwordEncoder.matches(userHashedPassword, encryptedPassword));
+    assertTrue(passwordEncoder.matches(password, userHashedPassword));
   }
 }
