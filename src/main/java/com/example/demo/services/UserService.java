@@ -12,8 +12,12 @@ import com.example.demo.repositories.UserRepository;
 
 @Service
 public class UserService {
+  private final UserRepository userRepository;
+
   @Autowired
-  UserRepository userRepository;
+  public UserService(UserRepository repository) {
+    this.userRepository = repository;
+  }
 
   public User createUser(UserRequest data) {
     User newUser = new User(data);
