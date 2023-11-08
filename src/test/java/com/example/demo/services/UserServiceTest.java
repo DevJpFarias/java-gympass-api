@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
@@ -36,5 +38,22 @@ public class UserServiceTest {
     User createdUser = userService.createUser(userRequest);
 
     assertEquals(expectedUser, createdUser, "Deve ser possível se cadastrar.");
+  }
+
+  public void passwordEncryptionTest() {
+    String password = "123456";
+
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    UserRequest userRequest = new UserRequest("Fulano", "fulano@mail.com", password);
+
+    User createdUser = userService.createUser(userRequest);
+
+    String userHashedPassword = createdUser.getId();
+
+    String encryptedPassword = passwordEncoder.encode(password);
+    
+    assertTrue(!password.equals(userHashedPassword));
+    assertTrue(passwordEncoder.matches(userHashedPassword, encryptedPassword));
   }
 }
