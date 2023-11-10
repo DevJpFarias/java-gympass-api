@@ -1,0 +1,22 @@
+CREATE TABLE users(
+  id TEXT PRIMARY KEY UNIQUE NOT NULL,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  role TEXT NOT NULL
+);
+
+CREATE TABLE check_ins (
+  id TEXT PRIMARY KEY UNIQUE NOT NULL,
+  created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  validated_at TIMESTAMP(3)
+);
+
+CREATE TABLE gyms (
+  id TEXT PRIMARY KEY UNIQUE NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  phone TEXT,
+  latitude DECIMAL(65,30) NOT NULL,
+  longitude DECIMAL(65,30) NOT NULL
+);
