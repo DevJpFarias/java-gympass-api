@@ -38,7 +38,7 @@ GymPass Java style app.
  - name: string
  - email: string
  - password_hash: string
- - created_at: date
+ - role: enum
 
 # CheckIn
  - id: string
@@ -53,13 +53,13 @@ GymPass Java style app.
  - latitude: number
  - longitude: number
 
- # Migrations
+# Database
 
--> Lembre-se de que a pasta deve estar no singular: resources/db/migration
+Crie o container do banco de dados com o comando: *docker compose up -d*
 
--> Lembre-se também de usar o padrão do flyway: versãodb__NomeDaMigration.sql
-=> Exemplo: V1__CreateUsersTable.sql
+*As migrations rodam automaticamente ao iniciar a aplicação.*
 
--> Para rodar as migrations, use o comando: mvn flyway:migrate -Dflyway.url=jdbc:postgresql://localhost:5432/javagympass -Dflyway.user=docker -Dflyway.password=docker
+## Lembre-se de que a pasta deve estar no singular: resources/db/migration
 
--> Se acontecer algum problema, tente o comando: mvn flyway:repair Dflyway.url=jdbc:postgresql://localhost:5432/javagympass -Dflyway.user=docker -Dflyway.password=docker
+## Lembre-se também de usar o padrão do flyway: versãodb__NomeDaMigration.sql
+=> *Exemplo: V1__CreateUsersTable.sql*
