@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   java-gympass-pg:
+    container_name: java-gympass-pg
     image: bitnami/postgresql
     ports:
       - 5432:5432
