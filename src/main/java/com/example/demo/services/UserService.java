@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
+import com.example.demo.infra.DuplicateEmailException;
 import com.example.demo.repositories.UserRepository;
 
 @Service
@@ -21,8 +22,15 @@ public class UserService {
   }
 
   public User createUser(UserRequest data) {
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    Optional<User> user = userRepository.findByEmail(data.email());
 
+    boolean emailAlreadyExists = user != null;
+
+    if (emailAlreadyExists) {
+      throw new DuplicateEmailException();
+    }
+
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     String hashPassword = passwordEncoder.encode(data.password());
 
     UserRequest newData = new UserRequest(
@@ -32,7 +40,6 @@ public class UserService {
     );
 
     User newUser = new User(newData);
-    
     userRepository.save(newUser);
 
     return newUser;
@@ -53,4 +60,10 @@ public class UserService {
   public User updateUser(User user) {
     return userRepository.save(user);
   }
+
+  // public boolean checkEmailAlreadyUsed(String email) {
+  //   user = userRepository.findByEmail(email);
+
+  //   const emailAlreadyUsed = user != null
+  // }
 }
