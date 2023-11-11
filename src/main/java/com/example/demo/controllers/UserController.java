@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
+import com.example.demo.infra.DuplicateEmailException;
 import com.example.demo.services.UserService;
 
 import jakarta.validation.Valid;
@@ -32,9 +33,15 @@ public class UserController {
   }
 
   @PostMapping
-  public ResponseEntity<User> createUser(@RequestBody @Valid UserRequest data) {
-    var newUser = userService.createUser(data);
+  public ResponseEntity createUser(@RequestBody @Valid UserRequest data) {
+    User newUser = null;
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+    try {
+      newUser = userService.createUser(data);
+
+      return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+    } catch (DuplicateEmailException err) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
   }
 }
