@@ -1,4 +1,4 @@
-package com.example.demo.infra;
+package com.example.demo.infra.exceptions;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
