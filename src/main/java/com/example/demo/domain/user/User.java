@@ -45,6 +45,7 @@ public class User implements UserDetails {
     this.name = userRequest.name();
     this.email = userRequest.email();
     this.password_hash = userRequest.password();
+    this.role = UserRole.USER;
   }
 
   @Override
@@ -59,8 +60,7 @@ public class User implements UserDetails {
 
   @Override
   public String getPassword() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
+    return null;
   }
 
   @Override
