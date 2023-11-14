@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
+import com.example.demo.infra.exceptions.UserNotFoundException;
 import com.example.demo.services.UserService;
 
 import jakarta.validation.Valid;
@@ -36,5 +37,16 @@ public class UserController {
     User user = userService.createUser(data);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(user);
+  }
+
+  @GetMapping(":id")
+  public ResponseEntity getUserProfile(String id) throws Exception {
+    try {
+      User user = userService.getUserProfile(id);
+
+      return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
+    } catch (UserNotFoundException error) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
   }
 }

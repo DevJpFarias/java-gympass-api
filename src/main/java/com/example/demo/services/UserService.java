@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
+import com.example.demo.infra.exceptions.UserNotFoundException;
 // import com.example.demo.infra.DuplicateEmailException;
 import com.example.demo.repositories.UserRepository;
 
@@ -22,14 +23,6 @@ public class UserService {
   }
 
   public User createUser(UserRequest data) {
-    // Optional<User> user = userRepository.findOneByEmail(data.email());
-
-    // boolean emailAlreadyExists = user.isPresent();
-
-    // if (emailAlreadyExists == true) {
-    //   throw new DuplicateEmailException();
-    // }
-
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     String hashPassword = passwordEncoder.encode(data.password());
 
@@ -52,18 +45,10 @@ public class UserService {
   }
 
   public User getUserProfile(String id) throws Exception {
-    return userRepository.findById(id).orElseThrow(() -> new Exception("Usuário não encontrado!"));
+    return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
   }
 
   public User updateUser(User user) {
     return userRepository.save(user);
   }
-
-  // public boolean checkEmailAlreadyUsed(String email) {
-  //   Optional<User> user = userRepository.findOneByEmail(email);
-
-  //   boolean emailAlreadyUsed = user.isPresent();
-
-  //   return emailAlreadyUsed;
-  // }
 }
