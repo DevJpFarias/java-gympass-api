@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
-import com.example.demo.infra.DuplicateEmailException;
+import com.example.demo.infra.exceptions.DuplicateEmailException;
 import com.example.demo.services.UserService;
 
 import jakarta.validation.Valid;
