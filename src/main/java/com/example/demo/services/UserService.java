@@ -1,7 +1,7 @@
 package com.example.demo.services;
 
 import java.util.List;
-import java.util.Optional;
+// import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
-import com.example.demo.infra.DuplicateEmailException;
+// import com.example.demo.infra.DuplicateEmailException;
 import com.example.demo.repositories.UserRepository;
 
 @Service
@@ -22,13 +22,13 @@ public class UserService {
   }
 
   public User createUser(UserRequest data) {
-    Optional<User> user = userRepository.findByEmail(data.email());
+    // Optional<User> user = userRepository.findOneByEmail(data.email());
 
-    boolean emailAlreadyExists = user != null;
+    // boolean emailAlreadyExists = user.isPresent();
 
-    if (emailAlreadyExists) {
-      throw new DuplicateEmailException();
-    }
+    // if (emailAlreadyExists == true) {
+    //   throw new DuplicateEmailException();
+    // }
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     String hashPassword = passwordEncoder.encode(data.password());
@@ -51,10 +51,8 @@ public class UserService {
     return users;
   }
 
-  public Optional<User> findUserById(String id) {
-    var user = userRepository.findById(id);
-
-    return user;
+  public User getUserProfile(String id) throws Exception {
+    return userRepository.findById(id).orElseThrow(() -> new Exception("Usuário não encontrado!"));
   }
 
   public User updateUser(User user) {
@@ -62,8 +60,10 @@ public class UserService {
   }
 
   // public boolean checkEmailAlreadyUsed(String email) {
-  //   user = userRepository.findByEmail(email);
+  //   Optional<User> user = userRepository.findOneByEmail(email);
 
-  //   const emailAlreadyUsed = user != null
+  //   boolean emailAlreadyUsed = user.isPresent();
+
+  //   return emailAlreadyUsed;
   // }
 }
