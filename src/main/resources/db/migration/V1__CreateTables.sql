@@ -17,6 +17,6 @@ CREATE TABLE gyms (
   title TEXT NOT NULL,
   description TEXT,
   phone TEXT,
-  latitude DECIMAL(65,30) NOT NULL,
-  longitude DECIMAL(65,30) NOT NULL
+  latitude DOUBLE PRECISION NOT NULL,
+  longitude DOUBLE PRECISION NOT NULL
 );
