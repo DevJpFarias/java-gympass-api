@@ -25,8 +25,8 @@ public class Gym {
   private String title;
   private String description;
   private String phone;
-  private Number latitude;
-  private Number longitude;
+  private Double latitude;
+  private Double longitude;
 
   public Gym (GymRequest gymRequest) {
     this.title = gymRequest.title();
