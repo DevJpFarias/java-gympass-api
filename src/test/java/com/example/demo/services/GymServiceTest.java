@@ -11,11 +11,11 @@ import org.mockito.MockitoAnnotations;
 
 import com.example.demo.domain.gym.Gym;
 import com.example.demo.domain.gym.GymRequest;
-import com.example.demo.repositories.GymsRepository;
+import com.example.demo.repositories.GymRepository;
 
 public class GymServiceTest {
   @Mock
-  private GymsRepository repository;
+  private GymRepository repository;
 
   private GymService gymService;
 
@@ -33,7 +33,7 @@ public class GymServiceTest {
       null,
       -22.7266211,
       -43.5126098
-      );
+    );
 
     Gym expectedGym = new Gym(gymRequest);
 

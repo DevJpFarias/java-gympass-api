@@ -1,6 +1,8 @@
 package com.example.demo.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 // import static org.junit.jupiter.api.Assertions.assertFalse;
 // import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
+import com.example.demo.infra.exceptions.UserNotFoundException;
 // import com.example.demo.infra.DuplicateEmailException;
 import com.example.demo.repositories.UserRepository;
 
@@ -39,13 +42,9 @@ public class UserServiceTest {
   public void createUserTest() {
     UserRequest userRequest = new UserRequest("Fulano", "fulano@mail.com", "123456");
 
-    User expectedUser = new User(userRequest);
-
-    when(repository.save(any(User.class))).thenReturn(expectedUser);
-
     User createdUser = userService.createUser(userRequest);
 
-    assertEquals(expectedUser, createdUser);
+    assertNotNull(createdUser);
   }
 
   @Test
@@ -67,16 +66,30 @@ public class UserServiceTest {
 
   @Test
   @DisplayName("Should be able to get user profile")
-  public void getUserProfile() {
+  public void getUserProfile() throws Exception {
     UserRequest userRequest = new UserRequest("Fulano", "fulano@mail.com", "123456");
 
     User createdUser = userService.createUser(userRequest);
 
-    String userName = createdUser.getName();
-    String userEmail = createdUser.getEmail();
+    String userId  = createdUser.getId();
+
+    assertNotNull(userId);
+
+    User user = userService.getUserProfile(userId);
+
+    String userName = user.getName();
+    String userEmail = user.getEmail();
 
     assertEquals("Fulano", userName);
     assertEquals("fulano@mail.com", userEmail);
+  }
+
+  @Test
+  @DisplayName("Should be able to get user profile")
+  public void getUserProfileError() throws Exception {
+    assertThrows(UserNotFoundException.class, () -> {
+      userService.getUserProfile("Inexistent id");
+    });
   }
 
   // @Test
