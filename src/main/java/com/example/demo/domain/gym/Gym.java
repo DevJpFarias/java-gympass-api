@@ -1,9 +1,17 @@
 package com.example.demo.domain.gym;
 
+import java.util.Set;
+
+import com.example.demo.domain.checkin.CheckIn;
+import com.example.demo.domain.user.User;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -23,10 +31,25 @@ public class Gym {
   private String id;
 
   private String title;
+
   private String description;
+
   private String phone;
+
   private Double latitude;
+
   private Double longitude;
+
+  @ManyToMany
+  @JoinTable(
+      name = "checkin_user_gym",
+      joinColumns = @JoinColumn(name = "gym_id"),
+      inverseJoinColumns = @JoinColumn(name = "user_id")
+  )
+  private Set<User> users;
+
+  @ManyToMany(mappedBy = "gyms")
+  private Set<CheckIn> checkIns;
 
   public Gym (GymRequest gymRequest) {
     this.title = gymRequest.title();
