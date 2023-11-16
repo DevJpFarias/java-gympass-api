@@ -10,6 +10,9 @@ CREATE TABLE check_ins (
   id TEXT PRIMARY KEY UNIQUE NOT NULL,
   created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   validated_at TIMESTAMP(3)
+
+  user_id TEXT REFERENCES users(id),
+  gym_id TEXT REFERENCES gyms(id)
 );
 
 CREATE TABLE gyms (
