@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.domain.gym.Gym;
 
-public interface GymsRepository extends JpaRepository<Gym, String> {
+public interface GymRepository extends JpaRepository<Gym, String> {
   List<Gym> findByTitleContaining(String title);
 }

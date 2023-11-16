@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.gym.Gym;
 import com.example.demo.domain.gym.GymRequest;
-import com.example.demo.repositories.GymsRepository;
+import com.example.demo.repositories.GymRepository;
 
 @Service
 public class GymService {
-  private final GymsRepository gymsRepository;
+  private final GymRepository gymsRepository;
 
   @Autowired
-  public GymService(GymsRepository repository) {
+  public GymService(GymRepository repository) {
     this.gymsRepository = repository;
   }
 
