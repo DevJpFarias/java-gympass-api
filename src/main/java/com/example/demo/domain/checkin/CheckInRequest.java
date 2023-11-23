@@ -1,15 +1,8 @@
 package com.example.demo.domain.checkin;
 
-import java.time.LocalDateTime;
-
-import com.example.demo.domain.gym.Gym;
-import com.example.demo.domain.user.User;
-
 public record CheckInRequest(
-  LocalDateTime validated_at,
+  String user_id,
 
-  User user,
-
-  Gym gym
+  String gym_id
 ) {
 }

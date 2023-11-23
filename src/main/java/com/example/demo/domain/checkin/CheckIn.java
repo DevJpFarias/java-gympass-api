@@ -47,7 +47,9 @@ public class CheckIn {
     created_at = LocalDateTime.now();
   }
 
-  public CheckIn (CheckInRequest checkInRequest) {
-    this.validated_at = checkInRequest.validated_at();
+  public CheckIn (LocalDateTime validated_at, User user, Gym gym) {
+    this.validated_at = validated_at;
+    this.user = user;
+    this.gym = gym;
   }
 }
