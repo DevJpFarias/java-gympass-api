@@ -19,7 +19,7 @@ import com.example.demo.services.GymService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("gyms")
+@RequestMapping("/gyms")
 public class GymController {
   @Autowired
   GymService gymService;
