@@ -1,9 +1,11 @@
 package com.example.demo.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
+import com.example.demo.dtos.UserDTO;
 import com.example.demo.infra.exceptions.UserNotFoundException;
 import com.example.demo.services.UserService;
 
@@ -27,10 +29,21 @@ public class UserController {
   private UserService userService;
 
   @GetMapping
-  public ResponseEntity<List<User>> getAllUsers() {
+  public ResponseEntity<List<UserDTO>> getAllUsers() {
     var users = userService.getAllUsers();
 
-    return ResponseEntity.status(HttpStatus.OK).body(users);
+   List<UserDTO> userDTOList = new ArrayList<>();
+
+    for (User user : users) {
+      UserDTO userDTO = new UserDTO(
+        user.getId(),
+        user.getName(),
+        user.getEmail()
+      );
+      userDTOList.add(userDTO);
+    }
+
+    return ResponseEntity.status(HttpStatus.OK).body(userDTOList);
   }
 
   @PostMapping
@@ -45,7 +58,13 @@ public class UserController {
     try {
       User user = userService.getUserProfile(id);
 
-      return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
+      UserDTO userDTO = new UserDTO(
+        user.getId(),
+        user.getName(),
+        user.getEmail())
+      ;
+
+      return ResponseEntity.status(HttpStatus.ACCEPTED).body(userDTO);
     } catch (UserNotFoundException error) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
