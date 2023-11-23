@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.gym.Gym;
 import com.example.demo.domain.gym.GymRequest;
+import com.example.demo.infra.exceptions.GymNotFoundException;
 import com.example.demo.repositories.GymRepository;
 
 @Service
@@ -28,5 +29,11 @@ public class GymService {
 
   public List<Gym> searchGyms(String title) {
     return gymsRepository.findByTitleContaining(title);
+  }
+
+  public Gym findGymById(String id) throws Exception {
+    return gymsRepository.findById(id).orElseThrow(
+      () -> new GymNotFoundException()
+    );
   }
 }
