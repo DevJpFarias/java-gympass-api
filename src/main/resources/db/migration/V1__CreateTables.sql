@@ -6,15 +6,6 @@ CREATE TABLE users(
   role TEXT NOT NULL
 );
 
-CREATE TABLE check_ins (
-  id TEXT PRIMARY KEY UNIQUE NOT NULL,
-  created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  validated_at TIMESTAMP(3)
-
-  user_id TEXT REFERENCES users(id),
-  gym_id TEXT REFERENCES gyms(id)
-);
-
 CREATE TABLE gyms (
   id TEXT PRIMARY KEY UNIQUE NOT NULL,
   title TEXT NOT NULL,
@@ -22,4 +13,13 @@ CREATE TABLE gyms (
   phone TEXT,
   latitude DOUBLE PRECISION NOT NULL,
   longitude DOUBLE PRECISION NOT NULL
+);
+
+CREATE TABLE check_ins (
+  id TEXT PRIMARY KEY UNIQUE NOT NULL,
+  created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  validated_at TIMESTAMP(3),
+
+  user_id TEXT REFERENCES users(id),
+  gym_id TEXT REFERENCES gyms(id)
 );
