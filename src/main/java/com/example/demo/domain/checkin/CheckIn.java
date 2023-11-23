@@ -1,19 +1,31 @@
 package com.example.demo.domain.checkin;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import com.example.demo.domain.gym.Gym;
 import com.example.demo.domain.user.User;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Table(name="checkIns")
+@Entity(name="checkIns")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class CheckIn {
   @Id @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
@@ -22,20 +34,14 @@ public class CheckIn {
 
   private LocalDateTime validated_at;
 
-  @ManyToMany
-  @JoinTable(
-    name = "check_in_user_gym",
-    joinColumns = @JoinColumn(name = "checkin_id"),
-    inverseJoinColumns = {
-      @JoinColumn(name = "user_id"),
-      @JoinColumn(name = "gym_id")
-    }
-  )
-  private Set<User> users;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  User user;
 
-  @ManyToMany(mappedBy = "checkIns")
-  private Set<Gym> gyms;
-
+  @ManyToOne
+  @JoinColumn(name = "gym_id")
+  Gym gym;
+  
   @PrePersist
   protected void onCreate() {
     created_at = LocalDateTime.now();

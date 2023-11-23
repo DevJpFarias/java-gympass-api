@@ -6,9 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +17,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.demo.domain.checkin.CheckIn;
-import com.example.demo.domain.gym.Gym;
 
 import jakarta.persistence.Column;
 import lombok.Getter;
@@ -47,16 +44,20 @@ public class User implements UserDetails {
   private String password_hash;
 
   private UserRole role;
-  @ManyToMany
-  @JoinTable(
-    name = "checkin_user_gym",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "gym_id")
-  )
-  private Set<Gym> gyms;
 
-  @ManyToMany(mappedBy = "users")
-  private Set<CheckIn> checkIns;
+  @OneToMany(mappedBy = "user")
+  Set<CheckIn> checkIns;
+
+  // @ManyToMany
+  // @JoinTable(
+  //   name = "checkin_user_gym",
+  //   joinColumns = @JoinColumn(name = "user_id"),
+  //   inverseJoinColumns = @JoinColumn(name = "gym_id")
+  // )
+  // private Set<Gym> gyms;
+
+  // @ManyToMany(mappedBy = "users")
+  // private Set<CheckIn> checkIns;
 
   public User (UserRequest userRequest) {
     this.name = userRequest.name();
