@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.example.demo.domain.checkin.CheckIn;
 import com.example.demo.domain.checkin.CheckInRequest;
 import com.example.demo.domain.gym.Gym;
 import com.example.demo.domain.user.User;
+import com.example.demo.dtos.CheckInDTO;
 import com.example.demo.services.CheckInService;
 import com.example.demo.services.GymService;
 import com.example.demo.services.UserService;
@@ -37,7 +39,7 @@ public class CheckInController {
   GymService gymService;
 
   @PostMapping
-  public ResponseEntity<CheckIn> createCheckIn(
+  public ResponseEntity<CheckInDTO> createCheckIn(
     @RequestBody
     @Valid
     CheckInRequest data
@@ -51,7 +53,15 @@ public class CheckInController {
       gym
     );
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(checkIn);
+    CheckInDTO checkInDTO = new CheckInDTO(
+      checkIn.getId(),
+      checkIn.getCreated_at(),
+      checkIn.getValidated_at(),
+      checkIn.getUser().getId(),
+      checkIn.getGym().getId()
+    );
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(checkInDTO);
   }
 
   @GetMapping("/{userId}")
