@@ -3,6 +3,7 @@ package com.example.demo.domain.gym;
 import java.util.Set;
 
 import com.example.demo.domain.checkin.CheckIn;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +40,11 @@ public class Gym {
 
   @OneToMany(mappedBy = "gym")
   Set<CheckIn> checkIns;
+
+  @JsonBackReference
+  public Set<CheckIn> getCheckIns() {
+    return checkIns;
+  }
 
   // @ManyToMany
   // @JoinTable(

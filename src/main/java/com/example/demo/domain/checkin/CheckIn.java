@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import com.example.demo.domain.gym.Gym;
 import com.example.demo.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,6 +43,16 @@ public class CheckIn {
   @ManyToOne
   @JoinColumn(name = "gym_id")
   Gym gym;
+
+  @JsonManagedReference
+  public User getUser() {
+    return user;
+  }
+
+  @JsonManagedReference
+  public Gym getGym() {
+    return gym;
+  }
   
   @PrePersist
   protected void onCreate() {

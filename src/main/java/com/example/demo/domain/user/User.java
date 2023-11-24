@@ -17,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.demo.domain.checkin.CheckIn;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import lombok.Getter;
@@ -47,6 +48,11 @@ public class User implements UserDetails {
 
   @OneToMany(mappedBy = "user")
   Set<CheckIn> checkIns;
+
+  @JsonBackReference
+  public Set<CheckIn> getCheckIns() {
+    return checkIns;
+  }
 
   // @ManyToMany
   // @JoinTable(
