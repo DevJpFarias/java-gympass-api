@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import com.example.demo.domain.gym.Gym;
 import com.example.demo.domain.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
