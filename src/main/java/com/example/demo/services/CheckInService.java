@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,8 @@ public class CheckInService {
   private final CheckInRepository checkInRepository;
 
   @Autowired
-  public CheckInService(
-    CheckInRepository checkInRepository
-  ) {
-    this.checkInRepository = checkInRepository;
+  public CheckInService(CheckInRepository repository) {
+    this.checkInRepository = repository;
   }
 
   public CheckIn createCheckIn(
@@ -36,5 +35,13 @@ public class CheckInService {
     checkInRepository.save(checkIn);
 
     return checkIn;
+  }
+
+  public Number getUserMetrics(User user) {
+    return checkInRepository.countByUser(user);
+  }
+
+  public List<CheckIn> fetchUserCheckIns(User user) {
+    return checkInRepository.findAllByUser(user);
   }
 }
