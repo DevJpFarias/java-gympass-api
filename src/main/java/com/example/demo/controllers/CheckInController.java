@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,5 +80,28 @@ public class CheckInController {
     String responseJson = objectMapper.writeValueAsString(metricsMap);
 
     return ResponseEntity.status(HttpStatus.OK).body(responseJson);
+  }
+
+  @GetMapping("/history/{userId}")
+  public ResponseEntity<List<CheckInDTO>> fetchUserCheckInHistory(
+    @PathVariable String userId
+  ) throws Exception {
+    User user = userService.getUserProfile(userId);
+
+    List<CheckIn> userCheckInHistory = checkInService.fetchUserCheckIns(user);
+    List<CheckInDTO> checkInDTOList = new ArrayList<>();
+
+    for (CheckIn checkIn : userCheckInHistory) {
+      CheckInDTO checkInDTO = new CheckInDTO(
+        checkIn.getId(),
+        checkIn.getCreated_at(),
+        checkIn.getValidated_at(),
+        checkIn.getUser().getId(),
+        checkIn.getGym().getId()
+      );
+      checkInDTOList.add(checkInDTO);
+    }
+
+    return ResponseEntity.status(HttpStatus.OK).body(checkInDTOList);
   }
 }
