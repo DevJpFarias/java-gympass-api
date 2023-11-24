@@ -6,7 +6,6 @@ import java.util.List;
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRequest;
 import com.example.demo.dtos.UserDTO;
-import com.example.demo.infra.exceptions.UserNotFoundException;
 import com.example.demo.services.UserService;
 
 import jakarta.validation.Valid;
@@ -32,7 +31,7 @@ public class UserController {
   public ResponseEntity<List<UserDTO>> getAllUsers() {
     var users = userService.getAllUsers();
 
-   List<UserDTO> userDTOList = new ArrayList<>();
+    List<UserDTO> userDTOList = new ArrayList<>();
 
     for (User user : users) {
       UserDTO userDTO = new UserDTO(
@@ -54,19 +53,15 @@ public class UserController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity getUserProfile(@PathVariable String id) throws Exception {
-    try {
-      User user = userService.getUserProfile(id);
+  public ResponseEntity<UserDTO> getUserProfile(@PathVariable String id) throws Exception {
+    User user = userService.getUserProfile(id);
 
-      UserDTO userDTO = new UserDTO(
-        user.getId(),
-        user.getName(),
-        user.getEmail())
-      ;
+    UserDTO userDTO = new UserDTO(
+      user.getId(),
+      user.getName(),
+      user.getEmail())
+    ;
 
-      return ResponseEntity.status(HttpStatus.ACCEPTED).body(userDTO);
-    } catch (UserNotFoundException error) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-    }
+    return ResponseEntity.status(HttpStatus.ACCEPTED).body(userDTO);
   }
 }
